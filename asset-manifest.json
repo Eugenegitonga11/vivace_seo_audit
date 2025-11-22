@@ -1,0 +1,15 @@
+{
+  "files": {
+    "main.css": "/vivace_seo_audit/static/css/main.136ae6e1.css",
+    "main.js": "/vivace_seo_audit/static/js/main.279557b0.js",
+    "static/js/453.f2bfaa42.chunk.js": "/vivace_seo_audit/static/js/453.f2bfaa42.chunk.js",
+    "index.html": "/vivace_seo_audit/index.html",
+    "main.136ae6e1.css.map": "/vivace_seo_audit/static/css/main.136ae6e1.css.map",
+    "main.279557b0.js.map": "/vivace_seo_audit/static/js/main.279557b0.js.map",
+    "453.f2bfaa42.chunk.js.map": "/vivace_seo_audit/static/js/453.f2bfaa42.chunk.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.136ae6e1.css",
+    "static/js/main.279557b0.js"
+  ]
+}
