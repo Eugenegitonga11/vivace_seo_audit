@@ -5,6 +5,30 @@ import { Search, TrendingUp, Link, Zap, Users, Globe, Target, Award, AlertCircle
 const VivaceSEOAudit = () => {
   const [activeTab, setActiveTab] = useState('overview');
 
+  // REAL SEMrush Data
+  const semrushData = {
+    authorityScore: 7,
+    organicTraffic: 6,
+    organicKeywords: 4,
+    backlinks: 60,
+    referringDomains: 15,
+    trafficShare: 27,
+    paidTraffic: 0,
+    paidKeywords: 0,
+    aiVisibility: 0,
+    aiMentions: 0,
+    citedPages: 1
+  };
+
+  // SEO Metrics Overview
+  const seoMetricsComparison = [
+    { metric: 'Authority Score', current: 7, target: 40, competitor: 35 },
+    { metric: 'Organic Traffic', current: 6, target: 500, competitor: 450 },
+    { metric: 'Organic Keywords', current: 4, target: 300, competitor: 250 },
+    { metric: 'Referring Domains', current: 15, target: 100, competitor: 85 },
+    { metric: 'Backlinks', current: 60, target: 250, competitor: 200 }
+  ];
+
   // REAL PageSpeed Insights Data
   const realPerformanceData = {
     mobile: {
@@ -78,7 +102,7 @@ const VivaceSEOAudit = () => {
   const seoHealthData = [
     { category: 'Technical SEO', score: 35 },
     { category: 'Content Quality', score: 70 },
-    { category: 'Backlinks', score: 45 },
+    { category: 'Backlinks', score: 25 },
     { category: 'User Experience', score: 40 },
     { category: 'Mobile Optimization', score: 30 },
     { category: 'Local SEO', score: 60 }
@@ -146,6 +170,7 @@ const VivaceSEOAudit = () => {
 
   const tabs = [
     { id: 'overview', name: 'Executive Summary', icon: Target },
+    { id: 'semrush', name: 'SEMrush Analysis', icon: Search },
     { id: 'performance', name: 'Performance Analysis', icon: Activity },
     { id: 'technical', name: 'Technical Fixes', icon: Zap },
     { id: 'competitors', name: 'Competitor Analysis', icon: Users },
@@ -316,6 +341,407 @@ const VivaceSEOAudit = () => {
                       </div>
                     </div>
                   ))}
+                </div>
+              </div>
+            </>
+          )}
+
+          {activeTab === 'semrush' && (
+            <>
+              {/* SEMrush Overview Header */}
+              <div className="bg-gradient-to-r from-orange-600 to-red-700 text-white rounded-xl shadow-2xl p-6">
+                <div className="flex items-start gap-4">
+                  <Search size={40} className="flex-shrink-0 mt-1" />
+                  <div>
+                    <h2 className="text-2xl font-bold mb-2">📊 SEMrush Domain Analysis - Full Report</h2>
+                    <p className="text-lg mb-3">Complete SEO and domain authority analysis reveals critical gaps in online visibility and ranking potential.</p>
+                    <div className="grid md:grid-cols-4 gap-3">
+                      <div className="bg-white bg-opacity-20 rounded-lg p-3">
+                        <div className="text-3xl font-bold">{semrushData.authorityScore}/100</div>
+                        <div className="text-sm">Authority Score</div>
+                      </div>
+                      <div className="bg-white bg-opacity-20 rounded-lg p-3">
+                        <div className="text-3xl font-bold">{semrushData.organicTraffic}</div>
+                        <div className="text-sm">Monthly Visitors</div>
+                      </div>
+                      <div className="bg-white bg-opacity-20 rounded-lg p-3">
+                        <div className="text-3xl font-bold">{semrushData.organicKeywords}</div>
+                        <div className="text-sm">Ranking Keywords</div>
+                      </div>
+                      <div className="bg-white bg-opacity-20 rounded-lg p-3">
+                        <div className="text-3xl font-bold">{semrushData.referringDomains}</div>
+                        <div className="text-sm">Referring Domains</div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* Key SEO Metrics Comparison */}
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h2 className="text-2xl font-bold mb-6">SEO Metrics: Current vs Target vs Competitor Average</h2>
+                <ResponsiveContainer width="100%" height={400}>
+                  <BarChart data={seoMetricsComparison}>
+                    <CartesianGrid strokeDasharray="3 3" />
+                    <XAxis dataKey="metric" />
+                    <YAxis />
+                    <Tooltip />
+                    <Legend />
+                    <Bar dataKey="current" fill="#ef4444" name="Vivace (Current)" />
+                    <Bar dataKey="competitor" fill="#f59e0b" name="Competitor Avg" />
+                    <Bar dataKey="target" fill="#10b981" name="Target (6 months)" />
+                  </BarChart>
+                </ResponsiveContainer>
+              </div>
+
+              {/* Detailed Metrics Grid */}
+              <div className="grid md:grid-cols-2 gap-6">
+                {/* Authority Score */}
+                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-gray-900">Authority Score</h3>
+                    <div className="text-4xl font-bold text-red-600">{semrushData.authorityScore}/100</div>
+                  </div>
+                  <div className="mb-4">
+                    <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-semibold">
+                      LOW AUTHORITY
+                    </span>
+                  </div>
+                  <p className="text-gray-700 mb-3">
+                    SEMrush labels this as "Low Authority" - the site has very low online trust, few ranking signals, and weak link profile.
+                  </p>
+                  <div className="bg-gray-50 p-4 rounded-lg">
+                    <h4 className="font-semibold text-gray-900 mb-2">Influenced By:</h4>
+                    <ul className="space-y-1 text-sm text-gray-700">
+                      <li>• Backlinks quality and quantity</li>
+                      <li>• Number of referring domains</li>
+                      <li>• Keyword presence and rankings</li>
+                      <li>• Organic traffic volume</li>
+                    </ul>
+                  </div>
+                  <div className="mt-4 p-3 bg-green-50 rounded-lg border border-green-200">
+                    <p className="text-sm font-semibold text-green-800">
+                      🎯 Goal: Reach 40+ authority score within 12 months through structured off-page SEO
+                    </p>
+                  </div>
+                </div>
+
+                {/* Organic Traffic */}
+                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-red-500">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-gray-900">Organic Traffic</h3>
+                    <div className="text-4xl font-bold text-red-600">{semrushData.organicTraffic}</div>
+                  </div>
+                  <div className="mb-4">
+                    <span className="px-3 py-1 bg-red-100 text-red-700 rounded-full text-sm font-semibold">
+                      EXTREMELY LOW
+                    </span>
+                  </div>
+                  <p className="text-gray-700 mb-3">
+                    The website is receiving almost no traffic from Google search. This indicates near-zero organic visibility.
+                  </p>
+                  <div className="bg-red-50 p-4 rounded-lg border border-red-200 mb-3">
+                    <h4 className="font-semibold text-red-900 mb-2">Impact:</h4>
+                    <ul className="space-y-1 text-sm text-red-800">
+                      <li>• Missing out on thousands of potential patients</li>
+                      <li>• Competitors capturing all organic search traffic</li>
+                      <li>• Zero brand visibility for treatment searches</li>
+                      <li>• Heavy reliance on paid or referral traffic</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-green-50 rounded-lg border border-green-200">
+                    <p className="text-sm font-semibold text-green-800">
+                      🎯 Goal: Achieve 500+ monthly organic visitors within 6-8 months
+                    </p>
+                  </div>
+                </div>
+
+                {/* Organic Keywords */}
+                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-orange-500">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-gray-900">Organic Keywords</h3>
+                    <div className="text-4xl font-bold text-orange-600">{semrushData.organicKeywords}</div>
+                  </div>
+                  <div className="mb-4">
+                    <span className="px-3 py-1 bg-orange-100 text-orange-700 rounded-full text-sm font-semibold">
+                      MINIMAL COVERAGE
+                    </span>
+                  </div>
+                  <p className="text-gray-700 mb-3">
+                    Site ranks for only 4 keywords, likely on very low positions (page 5-10 of Google search results).
+                  </p>
+                  <div className="bg-gray-50 p-4 rounded-lg mb-3">
+                    <h4 className="font-semibold text-gray-900 mb-2">Why This Matters:</h4>
+                    <ul className="space-y-1 text-sm text-gray-700">
+                      <li>• Competitors rank for 200-500+ keywords</li>
+                      <li>• Each keyword is a potential traffic source</li>
+                      <li>• Limited keyword coverage = limited discovery</li>
+                      <li>• Missing long-tail search opportunities</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-blue-50 rounded-lg border border-blue-200">
+                    <p className="text-sm font-semibold text-blue-800">
+                      🎯 Goal: 300-500 organic keywords within 6-12 months through content strategy
+                    </p>
+                  </div>
+                </div>
+
+                {/* Backlink Profile */}
+                <div className="bg-white rounded-xl shadow-lg p-6 border-l-4 border-yellow-500">
+                  <div className="flex items-center justify-between mb-4">
+                    <h3 className="text-xl font-bold text-gray-900">Backlink Profile</h3>
+                    <div>
+                      <div className="text-3xl font-bold text-yellow-600">{semrushData.backlinks}</div>
+                      <div className="text-sm text-gray-600 text-right">backlinks</div>
+                    </div>
+                  </div>
+                  <div className="grid grid-cols-2 gap-3 mb-4">
+                    <div className="p-3 bg-gray-50 rounded-lg text-center">
+                      <div className="text-2xl font-bold text-gray-900">{semrushData.referringDomains}</div>
+                      <div className="text-xs text-gray-600">Referring Domains</div>
+                    </div>
+                    <div className="p-3 bg-yellow-50 rounded-lg text-center">
+                      <div className="text-2xl font-bold text-yellow-600">Low</div>
+                      <div className="text-xs text-gray-600">Quality Rating</div>
+                    </div>
+                  </div>
+                  <div className="bg-yellow-50 p-4 rounded-lg border border-yellow-200 mb-3">
+                    <h4 className="font-semibold text-yellow-900 mb-2">Analysis:</h4>
+                    <ul className="space-y-1 text-sm text-yellow-800">
+                      <li>• Very low number of referring domains (15)</li>
+                      <li>• Most backlinks appear to be low authority</li>
+                      <li>• Natural/high-quality editorial backlinks missing</li>
+                      <li>• Weak link profile compared to competitors</li>
+                    </ul>
+                  </div>
+                  <div className="p-3 bg-purple-50 rounded-lg border border-purple-200">
+                    <p className="text-sm font-semibold text-purple-800">
+                      🎯 Goal: 150-300 high-authority backlinks over next 12 months
+                    </p>
+                  </div>
+                </div>
+              </div>
+
+              {/* Traffic Sources */}
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h2 className="text-2xl font-bold mb-6">Traffic Source Distribution</h2>
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="text-center p-6 bg-gradient-to-br from-blue-50 to-blue-100 rounded-lg">
+                    <div className="text-5xl font-bold text-blue-600 mb-2">{semrushData.trafficShare}%</div>
+                    <div className="text-sm text-gray-700 font-semibold mb-2">From Organic Search</div>
+                    <div className="text-xs text-gray-600">27% organic is low for a service business</div>
+                  </div>
+                  <div className="text-center p-6 bg-gradient-to-br from-gray-50 to-gray-100 rounded-lg">
+                    <div className="text-5xl font-bold text-gray-600 mb-2">73%</div>
+                    <div className="text-sm text-gray-700 font-semibold mb-2">From Other Sources</div>
+                    <div className="text-xs text-gray-600">Direct, social, referrals, etc.</div>
+                  </div>
+                  <div className="text-center p-6 bg-gradient-to-br from-green-50 to-green-100 rounded-lg border-2 border-green-400">
+                    <div className="text-5xl font-bold text-green-600 mb-2">60%</div>
+                    <div className="text-sm text-gray-700 font-semibold mb-2">Target Organic Share</div>
+                    <div className="text-xs text-green-700 font-semibold">Industry benchmark for success</div>
+                  </div>
+                </div>
+                <div className="mt-4 p-4 bg-blue-50 rounded-lg border border-blue-200">
+                  <p className="text-sm text-blue-900">
+                    <strong>Insight:</strong> For a successful beauty/clinic brand, organic search should contribute 50-70% of total traffic. This indicates significant growth opportunity.
+                  </p>
+                </div>
+              </div>
+
+              {/* Paid Traffic Analysis */}
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h2 className="text-2xl font-bold mb-4">Paid Advertising Status</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="p-6 bg-gray-50 rounded-lg border-2 border-gray-300">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="font-bold text-gray-900">Paid Traffic</h3>
+                      <span className="text-3xl font-bold text-gray-600">{semrushData.paidTraffic}</span>
+                    </div>
+                    <p className="text-sm text-gray-600">No Google Ads campaigns running</p>
+                  </div>
+                  <div className="p-6 bg-gray-50 rounded-lg border-2 border-gray-300">
+                    <div className="flex items-center justify-between mb-3">
+                      <h3 className="font-bold text-gray-900">Paid Keywords</h3>
+                      <span className="text-3xl font-bold text-gray-600">{semrushData.paidKeywords}</span>
+                    </div>
+                    <p className="text-sm text-gray-600">Not targeting any paid keywords</p>
+                  </div>
+                </div>
+                <div className="mt-4 p-5 bg-blue-50 rounded-lg border border-blue-200">
+                  <h4 className="font-semibold text-blue-900 mb-2">💡 Recommendation:</h4>
+                  <p className="text-sm text-blue-800 mb-3">
+                    While paid ads are optional, combining Google Ads with SEO can accelerate growth significantly. In competitive beauty/aesthetics markets, paid + organic strategy works best.
+                  </p>
+                  <div className="grid md:grid-cols-2 gap-3 text-xs">
+                    <div className="p-3 bg-white rounded">
+                      <strong>Pros of Adding Paid:</strong>
+                      <ul className="mt-1 space-y-1">
+                        <li>• Immediate visibility while SEO builds</li>
+                        <li>• Test keywords before SEO investment</li>
+                        <li>• Capture high-intent searches now</li>
+                        <li>• Dominate SERP with ads + organic</li>
+                      </ul>
+                    </div>
+                    <div className="p-3 bg-white rounded">
+                      <strong>SEO-First Approach:</strong>
+                      <ul className="mt-1 space-y-1">
+                        <li>• Long-term sustainable traffic</li>
+                        <li>• Higher ROI over time</li>
+                        <li>• Builds brand authority</li>
+                        <li>• Better for competitive advantage</li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+              {/* AI Search Visibility */}
+              <div className="bg-gradient-to-br from-purple-50 to-indigo-50 rounded-xl shadow-lg p-6 border-2 border-purple-300">
+                <h2 className="text-2xl font-bold mb-4 text-purple-900">🤖 AI Search Visibility (Google AI Overview)</h2>
+                <div className="grid md:grid-cols-3 gap-4 mb-4">
+                  <div className="bg-white p-5 rounded-lg shadow text-center">
+                    <div className="text-4xl font-bold text-purple-600 mb-2">{semrushData.aiVisibility}</div>
+                    <div className="text-sm text-gray-700">AI Visibility Score</div>
+                  </div>
+                  <div className="bg-white p-5 rounded-lg shadow text-center">
+                    <div className="text-4xl font-bold text-purple-600 mb-2">{semrushData.aiMentions}</div>
+                    <div className="text-sm text-gray-700">AI Mentions</div>
+                  </div>
+                  <div className="bg-white p-5 rounded-lg shadow text-center">
+                    <div className="text-4xl font-bold text-purple-600 mb-2">{semrushData.citedPages}</div>
+                    <div className="text-sm text-gray-700">Cited Pages</div>
+                  </div>
+                </div>
+                <div className="p-5 bg-white rounded-lg border-2 border-purple-200">
+                  <h3 className="font-bold text-purple-900 mb-3">What This Means:</h3>
+                  <ul className="space-y-2 text-sm text-gray-700 mb-4">
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600">✕</span>
+                      <span>Vivace does not appear in Google's AI-generated search answers</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-red-600">✕</span>
+                      <span>Only 1 page has been "noticed" by AI search algorithms</span>
+                    </li>
+                    <li className="flex items-start gap-2">
+                      <span className="text-orange-600">⚠</span>
+                      <span>Missing out on the future of search - AI Overview appears at top of results</span>
+                    </li>
+                  </ul>
+                  <div className="p-4 bg-purple-50 rounded-lg">
+                    <h4 className="font-semibold text-purple-900 mb-2">🎯 How to Improve AI Visibility:</h4>
+                    <ul className="space-y-1 text-sm text-purple-800">
+                      <li>• Add FAQ schema markup to all service pages</li>
+                      <li>• Create comprehensive how-to content</li>
+                      <li>• Publish long-form educational content (2,000+ words)</li>
+                      <li>• Implement structured data across all pages</li>
+                      <li>• Answer common questions in depth</li>
+                      <li>• Build topical authority through expert content</li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+
+              {/* Interpretation Summary Table */}
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h2 className="text-2xl font-bold mb-6">Key Findings Summary Table</h2>
+                <div className="overflow-x-auto">
+                  <table className="w-full text-sm">
+                    <thead className="bg-gray-100">
+                      <tr>
+                        <th className="px-4 py-3 text-left font-semibold">Area</th>
+                        <th className="px-4 py-3 text-left font-semibold">Current Status</th>
+                        <th className="px-4 py-3 text-left font-semibold">Impact</th>
+                        <th className="px-4 py-3 text-left font-semibold">Required Action</th>
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y">
+                      <tr className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium">Authority Score</td>
+                        <td className="px-4 py-3"><span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-semibold">7 (Low)</span></td>
+                        <td className="px-4 py-3 text-gray-700">Ranking struggles</td>
+                        <td className="px-4 py-3 text-purple-700">Increase quality backlinks</td>
+                      </tr>
+                      <tr className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium">Organic Traffic</td>
+                        <td className="px-4 py-3"><span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-semibold">6 visitors/month</span></td>
+                        <td className="px-4 py-3 text-gray-700">Almost invisible on Google</td>
+                        <td className="px-4 py-3 text-purple-700">Full SEO strategy needed</td>
+                      </tr>
+                      <tr className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium">Organic Keywords</td>
+                        <td className="px-4 py-3"><span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-semibold">4</span></td>
+                        <td className="px-4 py-3 text-gray-700">Limited reach</td>
+                        <td className="px-4 py-3 text-purple-700">Keyword research + optimized content</td>
+                      </tr>
+                      <tr className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium">Referring Domains</td>
+                        <td className="px-4 py-3"><span className="px-2 py-1 bg-orange-100 text-orange-700 rounded text-xs font-semibold">15</span></td>
+                        <td className="px-4 py-3 text-gray-700">Weak authority</td>
+                        <td className="px-4 py-3 text-purple-700">Target 100+ domains in 12 months</td>
+                      </tr>
+                      <tr className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium">Backlinks</td>
+                        <td className="px-4 py-3"><span className="px-2 py-1 bg-yellow-100 text-yellow-700 rounded text-xs font-semibold">60</span></td>
+                        <td className="px-4 py-3 text-gray-700">Low-medium</td>
+                        <td className="px-4 py-3 text-purple-700">Improve quality, not quantity</td>
+                      </tr>
+                      <tr className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium">AI Search Visibility</td>
+                        <td className="px-4 py-3"><span className="px-2 py-1 bg-red-100 text-red-700 rounded text-xs font-semibold">0</span></td>
+                        <td className="px-4 py-3 text-gray-700">No AI placement</td>
+                        <td className="px-4 py-3 text-purple-700">Add structured data & FAQ SEO</td>
+                      </tr>
+                      <tr className="hover:bg-gray-50">
+                        <td className="px-4 py-3 font-medium">Paid Traffic</td>
+                        <td className="px-4 py-3"><span className="px-2 py-1 bg-gray-100 text-gray-700 rounded text-xs font-semibold">0</span></td>
+                        <td className="px-4 py-3 text-gray-700">No exposure</td>
+                        <td className="px-4 py-3 text-purple-700">Optional but recommended</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
+
+              {/* Action Priority Matrix */}
+              <div className="bg-white rounded-xl shadow-lg p-6">
+                <h2 className="text-2xl font-bold mb-6">SEMrush Data: Action Priority Matrix</h2>
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="p-5 border-l-4 border-red-500 bg-red-50 rounded-r-lg">
+                    <h3 className="font-bold text-red-900 mb-3 text-lg">🚨 Critical (Start Immediately)</h3>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-red-600">1.</span>
+                        <span><strong>Build Authority:</strong> Launch aggressive backlink campaign to reach 100+ referring domains</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-red-600">2.</span>
+                        <span><strong>Keyword Expansion:</strong> Target 50-100 keywords in first 3 months through content</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-red-600">3.</span>
+                        <span><strong>Traffic Growth:</strong> Fix performance issues to convert rankings into traffic</span>
+                      </li>
+                    </ul>
+                  </div>
+                  <div className="p-5 border-l-4 border-orange-500 bg-orange-50 rounded-r-lg">
+                    <h3 className="font-bold text-orange-900 mb-3 text-lg">⚠️ High Priority (Month 2-3)</h3>
+                    <ul className="space-y-2 text-sm text-gray-700">
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-orange-600">4.</span>
+                        <span><strong>AI Visibility:</strong> Add FAQ schema and create comprehensive Q&A content</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-orange-600">5.</span>
+                        <span><strong>Traffic Distribution:</strong> Push organic share from 27% to 50%+</span>
+                      </li>
+                      <li className="flex items-start gap-2">
+                        <span className="font-bold text-orange-600">6.</span>
+                        <span><strong>Consider Paid Ads:</strong> Run complementary campaigns while SEO builds</span>
+                      </li>
+                    </ul>
+                  </div>
                 </div>
               </div>
             </>
@@ -1025,7 +1451,7 @@ const VivaceSEOAudit = () => {
                     'WEEK 4: Run PageSpeed test - Target: 70+/100'
                   ]}
                   kpi="Target: PageSpeed 70+, LCP <4s, Pass mobile Core Web Vitals"
-                  budget=" (hosting upgrade + tools)"
+                  budget="$500-800 (hosting upgrade + tools)"
                 />
 
                 <RoadmapPhase 
@@ -1043,7 +1469,7 @@ const VivaceSEOAudit = () => {
                     'WEEK 4: Create comprehensive service pages (1,500+ words each)'
                   ]}
                   kpi="Target: PageSpeed 85+, Core Web Vitals PASSED, 20 citations built"
-                  budget=" (content creation + tools)"
+                  budget="$300-500 (content creation + tools)"
                 />
 
                 <RoadmapPhase 
@@ -1063,7 +1489,7 @@ const VivaceSEOAudit = () => {
                     'Build location-specific landing pages (Parklands, Westlands, Karen)'
                   ]}
                   kpi="Target: Ranking for 50+ keywords in top 10, 50 backlinks total"
-                  budget=" (content + outreach)"
+                  budget="$800-1,200 (content + outreach)"
                 />
 
                 <RoadmapPhase 
@@ -1083,7 +1509,7 @@ const VivaceSEOAudit = () => {
                     'Target featured snippets for key terms'
                   ]}
                   kpi="Target: #1 for primary keywords, 150+ backlinks, 300% traffic growth"
-                  budget=" (advanced content + link building)"
+                  budget="$1,000-1,500 (advanced content + link building)"
                 />
               </div>
 
@@ -1107,27 +1533,27 @@ const VivaceSEOAudit = () => {
                   <ul className="space-y-3">
                     <li className="flex justify-between">
                       <span className="text-gray-700">Performance fixes</span>
-                      <span className="font-semibold">N/A</span>
+                      <span className="font-semibold">$1,000</span>
                     </li>
                     <li className="flex justify-between">
                       <span className="text-gray-700">Content creation</span>
-                      <span className="font-semibold">N/A</span>
+                      <span className="font-semibold">$3,000</span>
                     </li>
                     <li className="flex justify-between">
                       <span className="text-gray-700">Link building</span>
-                      <span className="font-semibold">N/A</span>
+                      <span className="font-semibold">$2,500</span>
                     </li>
                     <li className="flex justify-between">
                       <span className="text-gray-700">Technical optimization</span>
-                      <span className="font-semibold">N/A</span>
+                      <span className="font-semibold">$800</span>
                     </li>
                     <li className="flex justify-between">
                       <span className="text-gray-700">Tools & software</span>
-                      <span className="font-semibold">N/A</span>
+                      <span className="font-semibold">$700</span>
                     </li>
                     <li className="flex justify-between pt-3 border-t border-gray-200">
                       <span className="text-gray-900 font-bold">Total (6 months)</span>
-                      <span className="font-bold text-purple-600">N/A</span>
+                      <span className="font-bold text-purple-600">$8,000</span>
                     </li>
                   </ul>
                   <p className="text-xs text-gray-600 mt-3">*Prices in USD. Can be adjusted based on local rates.</p>
@@ -1138,19 +1564,19 @@ const VivaceSEOAudit = () => {
                   <ul className="space-y-3">
                     <li className="flex flex-col">
                       <span className="text-gray-700 text-sm">New monthly organic leads</span>
-                      <span className="font-bold text-2xl text-green-600">N/A</span>
+                      <span className="font-bold text-2xl text-green-600">200-300</span>
                     </li>
                     <li className="flex flex-col">
                       <span className="text-gray-700 text-sm">Avg. client value</span>
-                      <span className="font-bold text-xl">N/A</span>
+                      <span className="font-bold text-xl">$200-500</span>
                     </li>
                     <li className="flex flex-col">
                       <span className="text-gray-700 text-sm">Conversion rate (est.)</span>
-                      <span className="font-bold text-xl">N/A</span>
+                      <span className="font-bold text-xl">15-20%</span>
                     </li>
                     <li className="flex flex-col pt-3 border-t border-green-300">
                       <span className="text-green-900 font-bold text-sm">Potential monthly revenue</span>
-                      <span className="font-bold text-3xl text-green-600">N/A</span>
+                      <span className="font-bold text-3xl text-green-600">$6K-30K</span>
                     </li>
                     <li className="flex flex-col mt-3">
                       <span className="text-gray-700 text-sm">ROI Timeline</span>
@@ -1158,9 +1584,9 @@ const VivaceSEOAudit = () => {
                     </li>
                   </ul>
                   <div className="mt-4 p-3 bg-green-100 rounded-lg">
-                    {/* <p className="text-xs text-green-900">
-                      <strong>Conservative estimate:</strong>  investment returns $36K-180K in additional revenue over 6 months
-                    </p> */}
+                    <p className="text-xs text-green-900">
+                      <strong>Conservative estimate:</strong> $8,000 investment returns $36K-180K in additional revenue over 6 months
+                    </p>
                   </div>
                 </div>
               </div>
