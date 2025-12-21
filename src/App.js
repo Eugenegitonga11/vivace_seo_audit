@@ -1,9 +1,37 @@
 import React, { useState } from 'react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer, RadarChart, PolarGrid, PolarAngleAxis, PolarRadiusAxis, Radar, LineChart, Line } from 'recharts';
-import { Search, TrendingUp, Link, Zap, Users, Globe, Target, Award, AlertCircle, CheckCircle, Clock, Activity, Eye } from 'lucide-react';
+import { Search, TrendingUp, Link, Zap, Users, Globe, Target, Award, AlertCircle, CheckCircle, Clock, Activity, Eye, MessageCircle, Send, X, Minimize2 } from 'lucide-react';
 
 const VivaceSEOAudit = () => {
   const [activeTab, setActiveTab] = useState('overview');
+  const [chatOpen, setChatOpen] = useState(false);
+  const [hasGreeted, setHasGreeted] = useState(false);
+  const [messages, setMessages] = useState([
+    {
+      role: 'assistant',
+      content: "👋 Hello! I'm your SEO Audit Assistant.\n\nI'm here to help you understand Vivace Clinic's SEO performance and guide you through this comprehensive report.\n\n🎯 I can help you with:\n• Understanding critical issues\n• Navigating the report sections\n• Explaining technical terms\n• Finding specific information\n• Prioritizing actions\n\nWhat would you like to explore first?",
+      suggestions: [
+        "What are the most critical issues?",
+        "Show me the performance problems",
+        "How much will fixes cost?",
+        "What's the timeline?"
+      ]
+    }
+  ]);
+  const [inputMessage, setInputMessage] = useState('');
+  const [isTyping, setIsTyping] = useState(false);
+
+  // Auto-open welcome on first load
+  React.useEffect(() => {
+    if (!hasGreeted) {
+      const timer = setTimeout(() => {
+        setChatOpen(true);
+        setHasGreeted(true);
+      }, 2000); // Opens after 2 seconds
+      
+      return () => clearTimeout(timer);
+    }
+  }, [hasGreeted]);
 
   // REAL SEMrush Data
   const semrushData = {
@@ -49,7 +77,7 @@ const VivaceSEOAudit = () => {
     }
   };
 
-  // Core Web Vitals Comparison Chart
+
   const coreWebVitalsData = [
     { 
       metric: 'LCP', 
@@ -88,7 +116,7 @@ const VivaceSEOAudit = () => {
     }
   ];
 
-  // Competitor comparison data
+  
   const competitorData = [
     { name: 'Vivace', score: 35, traffic: 'Low', backlinks: 'Low', speed: 'Poor' },
     { name: 'Allure Laser', score: 78, traffic: 'Medium-High', backlinks: 'Medium', speed: 'Good' },
@@ -98,7 +126,7 @@ const VivaceSEOAudit = () => {
     { name: 'Avane Clinic', score: 80, traffic: 'Medium-High', backlinks: 'Medium', speed: 'Good' }
   ];
 
-  // SEO Health Metrics (Updated with real performance data)
+  
   const seoHealthData = [
     { category: 'Technical SEO', score: 35 },
     { category: 'Content Quality', score: 70 },
@@ -108,7 +136,7 @@ const VivaceSEOAudit = () => {
     { category: 'Local SEO', score: 60 }
   ];
 
-  // REAL Critical issues from PageSpeed
+  
   const criticalIssues = [
     { issue: 'Extremely Slow LCP - 8.7s mobile, 7.2s desktop (Target: <2.5s)', impact: 'Critical', priority: 'URGENT', timeImpact: '6+ seconds delay' },
     { issue: 'Very High TTFB - 4.1s mobile, 3.9s desktop (Target: <0.8s)', impact: 'Critical', priority: 'URGENT', timeImpact: '3+ seconds delay' },
@@ -118,7 +146,7 @@ const VivaceSEOAudit = () => {
     { issue: 'Low domain authority (estimated 15-20)', impact: 'High', priority: 'High', timeImpact: 'Ranking limitation' }
   ];
 
-  // REAL Quick Wins based on PageSpeed
+  
   const quickWins = [
     { action: 'Compress and convert images to WebP format', impact: 'Save ~2-3 seconds on LCP', difficulty: 'Easy' },
     { action: 'Enable browser caching for static resources', impact: 'Reduce repeat load times by 50%', difficulty: 'Easy' },
@@ -178,6 +206,131 @@ const VivaceSEOAudit = () => {
     { id: 'roadmap', name: '6-Month Roadmap', icon: Award }
   ];
 
+  // AI Assistant Knowledge Base
+  const getAIResponse = (userMessage) => {
+    const msg = userMessage.toLowerCase();
+    
+    // Critical issues
+    if (msg.includes('critical') || msg.includes('urgent') || msg.includes('problem')) {
+      return {
+        content: "🚨 Vivace has several CRITICAL issues:\n\n1. **Performance Crisis:** LCP 8.7s mobile (target: <2.5s) - Users wait too long\n2. **Failed Core Web Vitals** on mobile & desktop\n3. **Authority Score: 7/100** - Extremely low trust\n4. **Only 6 organic visitors/month** - Nearly invisible\n5. **4 ranking keywords** - Minimal coverage\n\nThe most urgent action is fixing site performance (Month 1) and building backlinks (ongoing).",
+        action: { tab: 'overview', label: 'View Critical Issues' }
+      };
+    }
+    
+    // Performance questions
+    if (msg.includes('performance') || msg.includes('speed') || msg.includes('slow') || msg.includes('pageSpeed')) {
+      return {
+        content: "📊 **Performance Analysis:**\n\n**Mobile:** LCP 8.7s, FCP 5.7s, TTFB 4.1s ❌\n**Desktop:** LCP 7.2s, FCP 5.4s, TTFB 3.9s ❌\n\n**Impact:** 60-70% of potential traffic is lost due to slow loading.\n\n**Quick Fixes:**\n• Upgrade hosting (saves 2-3s)\n• Compress images to WebP (saves 2-3s)\n• Enable CDN (saves 1-2s)\n• Implement lazy loading (saves 1-2s)",
+        action: { tab: 'performance', label: 'See Performance Details' }
+      };
+    }
+    
+    // SEMrush / Authority questions
+    if (msg.includes('semrush') || msg.includes('authority') || msg.includes('backlink') || msg.includes('domain')) {
+      return {
+        content: "🔍 **SEMrush Analysis Summary:**\n\n• **Authority Score:** 7/100 (Low)\n• **Organic Traffic:** 6 visitors/month\n• **Keywords Ranking:** Only 4\n• **Backlinks:** 60 (from 15 domains)\n• **AI Visibility:** 0\n\n**Goal:** Reach 40+ authority, 500+ visitors, 300 keywords in 6 months through structured backlink building and content strategy.",
+        action: { tab: 'semrush', label: 'View SEMrush Analysis' }
+      };
+    }
+    
+    // Investment / Cost questions
+    if (msg.includes('cost') || msg.includes('investment') || msg.includes('price') || msg.includes('budget')) {
+      return {
+        content: "💰 **Investment Breakdown (6 months):**\n\n• Performance fixes: $1,000\n• Content creation: $3,000\n• Link building: $2,500\n• Technical optimization: $800\n• Tools & software: $700\n\n**Total: $8,000**\n\n**Expected ROI:** $36K-180K in additional revenue over 6 months (break even by month 3-4). Conservative estimate: 300-400% traffic increase.",
+        action: { tab: 'roadmap', label: 'View Full Roadmap' }
+      };
+    }
+    
+    // Improvement / Fix questions
+    if (msg.includes('improve') || msg.includes('fix') || msg.includes('solution') || msg.includes('action')) {
+      return {
+        content: "✅ **Top Priority Actions:**\n\n**Week 1:**\n• Upgrade to premium hosting\n• Compress all images → WebP\n• Enable Cloudflare CDN\n• Implement lazy-loading\n\n**Month 1:**\n• Get PageSpeed to 70+\n• Pass Core Web Vitals\n• Add schema markup\n\n**Months 2-6:**\n• Build 150+ quality backlinks\n• Create 300+ ranking keywords\n• Reach 500+ monthly visitors",
+        action: { tab: 'technical', label: 'See Technical Fixes' }
+      };
+    }
+    
+    // Competitor questions
+    if (msg.includes('competitor') || msg.includes('competition') || msg.includes('rank')) {
+      return {
+        content: "👥 **Competitor Analysis:**\n\nVivace (35/100) is significantly behind:\n• Dr. Stasch: 82/100\n• Avane Clinic: 80/100\n• Allure Laser: 78/100\n\n**Gap:** All competitors have 70-85 PageSpeed scores vs Vivace's 35. They also have 200-500 keywords vs Vivace's 4.\n\n**Opportunity:** Fix performance first, then content. You can rank #1 in 6 months.",
+        action: { tab: 'competitors', label: 'View Competitor Details' }
+      };
+    }
+    
+    // Strategy questions
+    if (msg.includes('strategy') || msg.includes('plan') || msg.includes('roadmap') || msg.includes('timeline')) {
+      return {
+        content: "🎯 **6-Month Strategy:**\n\n**Month 1:** Performance fixes (URGENT)\n**Month 2:** Schema, citations, content start\n**Months 3-4:** Authority building, 50+ backlinks\n**Months 5-6:** Scale content, dominate local\n\n**Outcome:** #1 for primary keywords, 300% traffic growth, 150+ backlinks, Authority Score 40+",
+        action: { tab: 'roadmap', label: 'View Complete Roadmap' }
+      };
+    }
+    
+    // Timeline questions
+    if (msg.includes('how long') || msg.includes('when') || msg.includes('time')) {
+      return {
+        content: "⏰ **Timeline Expectations:**\n\n• **Week 1-2:** See 40-50% speed improvement\n• **Month 2:** Pass Core Web Vitals ✅\n• **Month 3:** Start ranking for 50+ keywords\n• **Month 4:** Double organic traffic\n• **Month 6:** #1 for primary keywords, 300% traffic growth\n\n**Break even:** Month 3-4\n**Full ROI:** Month 6+",
+        action: { tab: 'roadmap', label: 'See Detailed Timeline' }
+      };
+    }
+    
+    // Navigation help
+    if (msg.includes('navigate') || msg.includes('where') || msg.includes('find') || msg.includes('show me')) {
+      return {
+        content: "📍 **Report Navigation:**\n\nUse the tabs above to explore:\n• **Executive Summary:** Overview & critical issues\n• **SEMrush Analysis:** Authority & backlink data\n• **Performance:** PageSpeed deep dive\n• **Technical Fixes:** Implementation steps\n• **Competitors:** Market analysis\n• **Strategy:** Keywords & backlinks\n• **Roadmap:** 6-month plan\n\nWhat section interests you most?",
+        suggestions: ["Show performance data", "View competitor analysis", "See the roadmap", "What's most critical?"]
+      };
+    }
+    
+    // Default response
+    return {
+      content: "I can help you with:\n\n• 🚨 Critical issues & priorities\n• 📊 Performance & PageSpeed data\n• 🔍 SEMrush & authority analysis\n• 💰 Investment & ROI projections\n• ✅ Implementation steps\n• 👥 Competitor comparison\n• 🎯 Strategy & timeline\n• 📍 Report navigation\n\nWhat would you like to know?",
+      suggestions: [
+        "What's most critical?",
+        "Show me quick wins",
+        "How much will this cost?",
+        "What's the timeline?"
+      ]
+    };
+  };
+
+  const handleSendMessage = async () => {
+    if (!inputMessage.trim()) return;
+    
+    const userMsg = inputMessage;
+    setInputMessage('');
+    
+    // Add user message
+    setMessages(prev => [...prev, { role: 'user', content: userMsg }]);
+    setIsTyping(true);
+    
+    // Simulate thinking delay
+    await new Promise(resolve => setTimeout(resolve, 800));
+    
+    // Get AI response
+    const response = getAIResponse(userMsg);
+    
+    setIsTyping(false);
+    setMessages(prev => [...prev, { 
+      role: 'assistant', 
+      content: response.content,
+      action: response.action,
+      suggestions: response.suggestions
+    }]);
+  };
+
+  const handleSuggestionClick = (suggestion) => {
+    setInputMessage(suggestion);
+    handleSendMessage();
+  };
+
+  const handleActionClick = (tab) => {
+    setActiveTab(tab);
+    setChatOpen(false);
+    // Scroll to top
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-pink-50 p-6">
       <div className="max-w-7xl mx-auto">
@@ -203,6 +356,119 @@ const VivaceSEOAudit = () => {
             </div>
           </div>
         </div>
+
+        {/* AI Chat Button - Floating */}
+        {!chatOpen && (
+          <button
+            onClick={() => setChatOpen(true)}
+            className="fixed bottom-6 right-6 bg-gradient-to-r from-purple-600 to-pink-600 text-white rounded-full p-4 shadow-2xl hover:shadow-3xl transition-all hover:scale-110 z-50 flex items-center gap-2"
+          >
+            <MessageCircle size={24} />
+            <span className="font-semibold">Ask AI Assistant</span>
+          </button>
+        )}
+
+        {/* AI Chat Window */}
+        {chatOpen && (
+          <div className="fixed bottom-6 right-6 w-96 bg-white rounded-2xl shadow-2xl z-50 flex flex-col max-h-[600px] border-2 border-purple-200">
+            {/* Chat Header */}
+            <div className="bg-gradient-to-r from-purple-600 to-pink-600 text-white p-4 rounded-t-2xl flex items-center justify-between">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 bg-white bg-opacity-20 rounded-full flex items-center justify-center">
+                  <MessageCircle size={20} />
+                </div>
+                <div>
+                  <div className="font-bold">SEO Assistant</div>
+                  <div className="text-xs opacity-90">Powered by AI</div>
+                </div>
+              </div>
+              <button
+                onClick={() => setChatOpen(false)}
+                className="hover:bg-white hover:bg-opacity-20 p-1 rounded transition-colors"
+              >
+                <X size={20} />
+              </button>
+            </div>
+
+            {/* Chat Messages */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-4 bg-gray-50">
+              {messages.map((msg, idx) => (
+                <div key={idx} className={`flex ${msg.role === 'user' ? 'justify-end' : 'justify-start'}`}>
+                  <div className={`max-w-[85%] ${
+                    msg.role === 'user' 
+                      ? 'bg-purple-600 text-white rounded-2xl rounded-tr-sm' 
+                      : 'bg-white border-2 border-purple-100 rounded-2xl rounded-tl-sm'
+                  } p-3 shadow-sm`}>
+                    <div className={`text-sm whitespace-pre-line ${msg.role === 'user' ? 'text-white' : 'text-gray-800'}`}>
+                      {msg.content}
+                    </div>
+                    
+                    {/* Action Button */}
+                    {msg.action && (
+                      <button
+                        onClick={() => handleActionClick(msg.action.tab)}
+                        className="mt-3 w-full bg-purple-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-purple-700 transition-colors"
+                      >
+                        {msg.action.label} →
+                      </button>
+                    )}
+                    
+                    {/* Suggestions */}
+                    {msg.suggestions && (
+                      <div className="mt-3 space-y-2">
+                        {msg.suggestions.map((suggestion, sIdx) => (
+                          <button
+                            key={sIdx}
+                            onClick={() => handleSuggestionClick(suggestion)}
+                            className="w-full text-left bg-purple-50 hover:bg-purple-100 text-purple-700 px-3 py-2 rounded-lg text-xs transition-colors border border-purple-200"
+                          >
+                            💬 {suggestion}
+                          </button>
+                        ))}
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
+              
+              {/* Typing Indicator */}
+              {isTyping && (
+                <div className="flex justify-start">
+                  <div className="bg-white border-2 border-purple-100 rounded-2xl rounded-tl-sm p-3 shadow-sm">
+                    <div className="flex gap-1">
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+                      <div className="w-2 h-2 bg-purple-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+                    </div>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* Chat Input */}
+            <div className="p-4 border-t border-gray-200 bg-white rounded-b-2xl">
+              <div className="flex gap-2">
+                <input
+                  type="text"
+                  value={inputMessage}
+                  onChange={(e) => setInputMessage(e.target.value)}
+                  onKeyPress={(e) => e.key === 'Enter' && handleSendMessage()}
+                  placeholder="Ask about the SEO audit..."
+                  className="flex-1 px-4 py-2 border-2 border-purple-200 rounded-xl focus:outline-none focus:border-purple-400 text-sm"
+                />
+                <button
+                  onClick={handleSendMessage}
+                  className="bg-purple-600 text-white p-2 rounded-xl hover:bg-purple-700 transition-colors"
+                >
+                  <Send size={20} />
+                </button>
+              </div>
+              <div className="text-xs text-gray-500 mt-2 text-center">
+                Ask me anything about this SEO audit report
+              </div>
+            </div>
+          </div>
+        )}
 
         {/* Navigation Tabs */}
         <div className="bg-white rounded-xl shadow-lg mb-6 p-2 flex gap-2 overflow-x-auto">
