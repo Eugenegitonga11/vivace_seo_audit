@@ -1,15 +1,15 @@
 {
   "files": {
-    "main.css": "/vivace_seo_audit/static/css/main.8d5094b5.css",
-    "main.js": "/vivace_seo_audit/static/js/main.8f12797e.js",
+    "main.css": "/vivace_seo_audit/static/css/main.963dd1b1.css",
+    "main.js": "/vivace_seo_audit/static/js/main.fc2d2c38.js",
     "static/js/453.f2bfaa42.chunk.js": "/vivace_seo_audit/static/js/453.f2bfaa42.chunk.js",
     "index.html": "/vivace_seo_audit/index.html",
-    "main.8d5094b5.css.map": "/vivace_seo_audit/static/css/main.8d5094b5.css.map",
-    "main.8f12797e.js.map": "/vivace_seo_audit/static/js/main.8f12797e.js.map",
+    "main.963dd1b1.css.map": "/vivace_seo_audit/static/css/main.963dd1b1.css.map",
+    "main.fc2d2c38.js.map": "/vivace_seo_audit/static/js/main.fc2d2c38.js.map",
     "453.f2bfaa42.chunk.js.map": "/vivace_seo_audit/static/js/453.f2bfaa42.chunk.js.map"
   },
   "entrypoints": [
-    "static/css/main.8d5094b5.css",
-    "static/js/main.8f12797e.js"
+    "static/css/main.963dd1b1.css",
+    "static/js/main.fc2d2c38.js"
   ]
 }
